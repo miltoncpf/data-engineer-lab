@@ -1,3 +1,6 @@
-import psycopg2
+import pandas as pd
 
-print('Biblioteca instalada com sucesso')
+df = pd.read_csv("clientes.csv")
+df["cidade"] = df["cidade"].fillna("Não informado")
+
+print(df)
