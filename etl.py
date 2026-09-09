@@ -15,19 +15,15 @@ cursor = conn.cursor()
 cursor.execute("""
     CREATE TABLE IF NOT EXISTS clientes (
         id SERIAL PRIMARY KEY,
+	cliente_id INTEGER UNIQUE,
         nome VARCHAR(100),
         cidade VARCHAR(100)
     )
 """)
 
-cursor.execute(""" 
-    INSERT INTO clientes (nome, cidade) 
-    VALUES (%s, %s)
-""", ("Milton", "Rio Preto"))
-
 conn.commit()
 
-cursor.execute("""SELECT id, nome, cidade 
+cursor.execute("""SELECT id, cliente_id, nome, cidade 
                   FROM clientes
                   ORDER BY id""")
 

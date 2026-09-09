@@ -19,8 +19,17 @@ cursor = conn.cursor()
 for indice, linha in df.iterrows():
 
     cursor.execute("""
-        INSERT INTO clientes (nome, cidade)
-        VALUES (%s, %s)
-    """, (linha["nome"], linha["cidade"]))
+        INSERT INTO clientes (cliente_id, nome, cidade)
+        VALUES (%s, %s, %s)
+
+	ON CONFLICT(cliente_id)
+	DO UPDATE SET
+		nome = EXCLUDED.nome,
+		cidade = EXCLUDED.cidade
+    """, (
+	linha["cliente_id"], 
+	linha["nome"],
+	linha["cidade"]
+	))
 
 conn.commit()

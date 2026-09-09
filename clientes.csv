@@ -1,6 +1,6 @@
-nome,cidade
-Milton,Rio Preto
-Ana,São Paulo
-Carlos,
-Mariana,Curitiba
-João,Rio de Janeiro
+cliente_id,nome,cidade
+101,Milton,Rio Preto
+102,Ana,São Paulo
+103,Carlos,Campinas
+104,Mariana,Curitiba
+105,João,Rio de Janeiro
