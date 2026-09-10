@@ -13,23 +13,23 @@ conn = psycopg2.connect(
 )
 
 print("Conectado com sucesso!!!")
+
 cursor = conn.cursor()
 
-dados = list(
-    df[['cliente_id', 'nome', 'cidade']]
-    .itertuples(index=False, name=None)
-)
+for indice, linha in df.iterrows():
 
-cursor.executemany("""
-    INSERT INTO clientes (cliente_id, nome, cidade)
-    VALUES (%s, %s, %s)
+    cursor.execute("""
+        INSERT INTO clientes (cliente_id, nome, cidade)
+        VALUES (%s, %s, %s)
 
 	ON CONFLICT(cliente_id)
 	DO UPDATE SET
 		nome = EXCLUDED.nome,
 		cidade = EXCLUDED.cidade
-    """, dados)
-
-
+    """, (
+	linha["cliente_id"], 
+	linha["nome"],
+	linha["cidade"]
+	))
 
 conn.commit()
