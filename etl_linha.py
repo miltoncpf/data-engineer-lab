@@ -1,7 +1,7 @@
 import psycopg2
 import pandas as pd
 
-df = pd.read_csv("clientes.csv")
+df = pd.read_csv("clientes2.csv")
 df["cidade"] = df["cidade"].fillna("Não informado")
 
 conn = psycopg2.connect(
