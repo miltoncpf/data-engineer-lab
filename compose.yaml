@@ -1,6 +1,6 @@
 services:
   python:
-    image: python:3.12
+    build: .
     container_name: python-etl  #nomear o container foi um exemplo para a primeira aula, mas normalmente deixamos o compose gerenciar isso e dar nomes automaticamte
     stdin_open: true
     tty: true
