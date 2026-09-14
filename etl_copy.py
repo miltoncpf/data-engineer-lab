@@ -2,9 +2,10 @@ import psycopg2
 from psycopg2.extras import execute_values
 import pandas as pd
 from io import StringIO
+import time
 
 
-df = pd.read_csv("clientes.csv")
+df = pd.read_csv("clientes2.csv")
 df["cidade"] = df["cidade"].fillna("Não informado")
 
 conn = psycopg2.connect(
@@ -27,6 +28,9 @@ cursor.execute(
 )
 
 cursor.execute("TRUNCATE TABLE staging_clientes")
+
+#inicio do cronômetro
+inicio = time.perf_counter()
 
 buffer = StringIO()
 
@@ -63,3 +67,7 @@ cursor.execute(
 	""")
 
 conn.commit()
+
+#final do cronometro
+fim = time.perf_counter()
+print(f"Tempo: {fim - inicio:.4f} segundos")

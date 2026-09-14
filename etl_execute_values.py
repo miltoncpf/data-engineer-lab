@@ -1,9 +1,9 @@
 import psycopg2
 from psycopg2.extras import execute_values
 import pandas as pd
+import time
 
-
-df = pd.read_csv("clientes.csv")
+df = pd.read_csv("clientes2.csv")
 df["cidade"] = df["cidade"].fillna("Não informado")
 
 conn = psycopg2.connect(
@@ -23,6 +23,9 @@ dados = list(
     .itertuples(index=False, name=None)
 )
 
+#inicio do cronômetro
+inicio = time.perf_counter()
+
 execute_values(
     cursor, 
     """
@@ -36,3 +39,7 @@ execute_values(
     dados)
 
 conn.commit()
+
+#final do cronometro
+fim = time.perf_counter()
+print(f"Tempo: {fim - inicio:.4f} segundos")
