@@ -1,6 +1,4 @@
-###Alteração da main
-Esta linha foi criada diretamente na branch main.
-
+Nome do ambiente: laboratorio-branch
 # Data Engineere Lab
 
 Laboratorio criado durante meus estudos em Engenharia de Dados.
@@ -31,8 +29,3 @@ como docker e Airflow, enquanto aprimoro outras skills que já domino.
 - [ ] Testes
 - [ ] CI/CD
 - [ ] GCP
-
-
-
----###!!!!Teste Merge
-Esta linha foi criada na branch teste-merge-real
