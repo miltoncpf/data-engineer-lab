@@ -29,4 +29,7 @@ como docker e Airflow, enquanto aprimoro outras skills que já domino.
 - [ ] CI/CD
 - [ ] GCP
 
-#--Teste Merge!!!
+
+
+---###!!!!Teste Merge
+
