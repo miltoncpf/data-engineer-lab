@@ -19,9 +19,9 @@ como docker e Airflow, enquanto aprimoro outras skills que já domino.
 - [x] Bind Mount
 - [x] Volumes
 - [x] Git
-- [ ] Dockerfile
-- [ ] PostgreSQL
-- [ ] ETL
+- [x] Dockerfile
+- [x] PostgreSQL
+- [x] ETL
 - [ ] Airflow
 - [ ] dbt
 - [ ] Testes
