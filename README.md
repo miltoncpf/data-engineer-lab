@@ -32,4 +32,3 @@ como docker e Airflow, enquanto aprimoro outras skills que já domino.
 
 
 ---###!!!!Teste Merge
-
