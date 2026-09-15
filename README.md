@@ -22,6 +22,7 @@ como docker e Airflow, enquanto aprimoro outras skills que já domino.
 - [x] Dockerfile
 - [x] PostgreSQL
 - [x] ETL
+- [ ] ELT
 - [ ] Airflow
 - [ ] dbt
 - [ ] Testes
