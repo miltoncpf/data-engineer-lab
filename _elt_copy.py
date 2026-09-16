@@ -8,6 +8,7 @@ import time
 df = pd.read_csv("clientes2.csv")
 df.columns = df.columns.str.strip().str.lower()
 
+#Criando conexão com o banco de dados Postgres
 conn = psycopg2.connect(
     host="postgres",
     port=5432,
@@ -19,6 +20,7 @@ conn = psycopg2.connect(
 print("Conectado com sucesso!!!")
 cursor = conn.cursor()
 
+#Criando a tabela raw_clientes caso não exista
 cursor.execute(
 	"""CREATE TABLE IF NOT EXISTS raw_clientes(
 	cliente_id INTEGER,
@@ -26,7 +28,16 @@ cursor.execute(
 	cidade VARCHAR(100)
 	)"""
 )
+#Criando a view stg_clientes para tratar os dados da tabela raw_clientes
+cursor.execute (
+    """CREATE OR REPLACE VIEW stg_clientes AS
+	SELECT
+    	cliente_id,
+    	nome,
+    	COALESCE(cidade, 'Não informado') AS cidade
+	FROM raw_clientes;""")
 
+#Limpando a tabela raw_clientes antes de inserir novos dados
 cursor.execute("TRUNCATE TABLE raw_clientes")
 
 #inicio do cronômetro
@@ -58,7 +69,7 @@ cursor.execute(
 	"""
 	INSERT INTO clientes (cliente_id, nome, cidade)
 	SELECT cliente_id, nome, cidade
-	FROM raw_clientes
+	FROM stg_clientes
 
 	ON CONFLICT (cliente_id)
 	DO UPDATE SET
