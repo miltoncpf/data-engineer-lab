@@ -64,17 +64,25 @@ cursor.copy_expert(
 	)
     """, buffer)
 
-#Upsert set-based:
+#Upsert set-based: 
 cursor.execute(
 	"""
-	INSERT INTO clientes (cliente_id, nome, cidade)
-	SELECT cliente_id, nome, cidade
+	INSERT INTO clientes (cliente_id, nome, cidade, ativo)
+	SELECT cliente_id, nome, cidade, TRUE
 	FROM stg_clientes
 
 	ON CONFLICT (cliente_id)
 	DO UPDATE SET
 		nome = EXCLUDED.NOME,
-		cidade = EXCLUDED.cidade
+		cidade = EXCLUDED.cidade,
+        ativo = TRUE
+        
+    #-----Melhorando o UPSERT para de fato só atualizar os registros que tiveram alterações, 
+	# evitando atualizações desnecessárias-----
+    WHERE
+		clientes.nome IS DISTINCT FROM EXCLUDED.nome
+		OR clientes.cidade IS DISTINCT FROM EXCLUDED.cidade
+		OR clientes.ativo IS DISTINCT FROM TRUE
 	""")
 
 conn.commit()
