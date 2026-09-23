@@ -99,8 +99,7 @@ cliente_id,nome,cidade
 98,Fernando  Klein ,Dom Feliciano
 99,Cristian  Damasceno Drummond,Santo Estêvão
 100,Felipe  Siqueira Azevedo,Urubici
-101,Heloísa  Quintana ,Curitiba
-102,Mateus  Klein Aguiar,Tapira
+101,Heloísa  Montana ,Curitiba
 103,Ornella Maria Reis Cerqueira,Água Branca
 104,Evelyn  Gonçalves Lopes,Barra de São Francisco
 105,Cristiano  Esteves Rocha,Guaimbê
@@ -224692,3 +224691,4 @@ cliente_id,nome,cidade
 224691,Thiago  Pereira Dias,Santa Cecília do Pavão
 224692,Sérgio Murilo Ferreira Caldas,Sarzedo
 224693,Patrícia Érica Ramos ,Recife
+224694,Teste Teste,Arizona
