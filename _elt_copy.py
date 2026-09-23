@@ -45,7 +45,7 @@ inicio = time.perf_counter()
 
 buffer = StringIO()
 
-#Utilizando o Copy: convertendo o  df para um fluxo CSV em memória
+#Convertendo o  df para um fluxo CSV em memória para fazer o copy
 df[["cliente_id", "nome", "cidade"]].to_csv(
 	buffer,
 	index=False,
@@ -54,7 +54,7 @@ df[["cliente_id", "nome", "cidade"]].to_csv(
 
 buffer.seek(0)
 
-#Enviando para o Postgres
+#======= 1) carrega snapshot atual na RAW
 cursor.copy_expert(
     """
 	COPY raw_clientes (cliente_id, nome, cidade)
@@ -64,7 +64,7 @@ cursor.copy_expert(
 	)
     """, buffer)
 
-#Upsert set-based: 
+#========= 2) INSERT / UPDATE / REATIVAÇÃO
 cursor.execute(
 	"""
 	INSERT INTO clientes (cliente_id, nome, cidade, ativo)
@@ -77,13 +77,27 @@ cursor.execute(
 		cidade = EXCLUDED.cidade,
         ativo = TRUE
         
-    #-----Melhorando o UPSERT para de fato só atualizar os registros que tiveram alterações, 
-	# evitando atualizações desnecessárias-----
+    -----Melhorando o UPSERT para de fato só atualizar os registros que tiveram alterações, 
+	-----evitando atualizações desnecessárias
     WHERE
 		clientes.nome IS DISTINCT FROM EXCLUDED.nome
 		OR clientes.cidade IS DISTINCT FROM EXCLUDED.cidade
 		OR clientes.ativo IS DISTINCT FROM TRUE
 	""")
+
+#======= 3) INATIVA quem não veio no snapshot atual
+cursor.execute(
+	"""
+	UPDATE clientes c
+    SET ativo = FALSE
+    WHERE c.ativo = TRUE 
+    	AND NOT EXISTS (
+			SELECT 1
+			FROM raw_clientes r
+			WHERE r.cliente_id = c.cliente_id
+	)
+	"""
+)
 
 conn.commit()
 
